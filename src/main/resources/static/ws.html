@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Profile notification client
+    </title>
+</head>
+<body>
+<script>
+
+    var socket = new WebSocket('ws://localhost:9090/ws/profiles');
+
+    socket.onopen = function(e) {
+        alert("[open] Соединение установлено");
+        // alert("Отправляем данные на сервер");
+        // const dataToSend = JSON.stringify({"email": "hey@mail.com"});
+        // socket.send(dataToSend);
+    };
+
+    socket.onmessage = function(event) {
+        alert(`[message] Данные получены с сервера: ${event.data}`);
+    };
+
+    socket.onclose = function(event) {
+        if (event.wasClean) {
+            alert(`[close] Соединение закрыто чисто, код=${event.code} причина=${event.reason}`);
+        } else {
+            alert('[close] Соединение прервано');
+        }
+    };
+
+    socket.onerror = function(error) {
+        alert(`[error] ${error}`);
+    };
+</script>
+</body>
+</html>
